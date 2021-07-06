@@ -7,14 +7,36 @@ option objc_class_prefix = "HLW";
 
 package br.com.pix;
 
-service DesafioPixService {
-  rpc send (DesafioPixRequest) returns (DesafioPixReply) {}
+service ChavePIXService {
+  rpc salvarChave (RegistraChavePixRequest) returns (RegistraChavePixResponse) {}
 }
 
-message DesafioPixRequest {
-  string name = 1;
+enum TipoChave {
+  INVALID_KEY_TYPE  = 0;
+  CPF = 1;
+  PHONE = 2;
+  EMAIL = 3;
+  RANDOM  = 4;
+  CNPJ =  5; //não foi solicitado, mas consta no Swagger
+
+
 }
 
-message DesafioPixReply {
-  string message = 1;
+enum TipoConta {
+  INVALID_ACCOUNT_TYPE = 0;
+  CONTA_POUPANC3 = 1;
+  CONTA_CORRENTE = 2;
 }
+
+message RegistraChavePixRequest{
+  string clientId = 1;
+  TipoChave tipoDeChave = 2;
+  string chave = 3;
+  TipoConta tipoDeConta = 4;
+}
+
+message RegistraChavePixResponse{
+  string pixId = 1;
+  string chave = 2;
+}
+
