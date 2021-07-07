@@ -26,14 +26,14 @@ class RegistraChavePixService(@Inject val itauService : ExternalAccountApi,
 
         //validar clientId
         //verifica se o cliente existe
-        val clienteDTOResponse : ClienteDTOResponse = itauService.consultaCliente(chavePixValidations.idCliente!!)
+        val clienteDTOResponse : ClienteDTOResponse? = itauService.consultaCliente(chavePixValidations.idCliente!!)
         if(clienteDTOResponse == null){
             throw ClienteInexistenteException("O cliente não existe")
         }
 
         //conta do cliente
         //verifica que EXISTINDO O CLIENTE, se o tipo de conta informado para este cliente existe
-        val contaDTOResponse : ContaDTOResponse = itauService.consultaContasIdCliente(chavePixValidations.idCliente,chavePixValidations.tipoConta.toString())
+        val contaDTOResponse : ContaDTOResponse? = itauService.consultaContasIdCliente(chavePixValidations.idCliente,chavePixValidations.tipoConta.toString())
         //println("Conta: ${contaDTOResponse}")
         if(contaDTOResponse == null){
             throw NaoExisteTipoContaClienteException("Não existe este tipo de conta associado a este cliente")

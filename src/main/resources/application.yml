@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: desafioPix
+  server:
+    port: 8087
 
 datasources:
   default:

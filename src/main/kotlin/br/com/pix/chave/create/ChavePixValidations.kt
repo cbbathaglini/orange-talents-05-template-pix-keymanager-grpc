@@ -7,6 +7,7 @@ import br.com.pix.conta.Conta
 import br.com.pix.key.TipoChave
 import br.com.pix.conta.TipoConta
 import br.com.pix.validation.PixKeyValidator
+import br.com.pix.validation.TypeAccountValidator
 import br.com.pix.validation.UUIDValidator
 import io.micronaut.core.annotation.Introspected
 import java.util.*
@@ -18,6 +19,7 @@ import javax.validation.constraints.Size
 
 @Introspected
 @PixKeyValidator
+@TypeAccountValidator
 data class ChavePixValidations(
 
     @field:NotBlank

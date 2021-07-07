@@ -10,6 +10,9 @@ package br.com.pix;
 service ChavePIXService {
   rpc salvarChave (RegistraChavePixRequest) returns (RegistraChavePixResponse) {}
 }
+service RemocaoChavePixService{
+  rpc remover (RemoverChavePixRequest) returns (RemoverChavePixResponse) {}
+}
 
 enum TipoChave {
   INVALID_KEY_TYPE  = 0;
@@ -40,3 +43,12 @@ message RegistraChavePixResponse{
   string chave = 2;
 }
 
+message RemoverChavePixRequest{
+  string pixId = 1;
+  string idcliente = 2;
+}
+
+message RemoverChavePixResponse{
+  string pixId = 1;
+  string idcliente = 2;
+}
