@@ -11,7 +11,7 @@ class ValidatePixKey: javax.validation.ConstraintValidator<PixKeyValidator, Chav
         if (pix?.tipoChave == null) {
             return true
         }
-
+        val ret = pix.tipoChave.valida(pix.valorChave!!)
         return pix.tipoChave.valida(pix.valorChave!!)
     }
 }
