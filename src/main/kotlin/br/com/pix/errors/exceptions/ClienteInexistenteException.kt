@@ -1,3 +1,3 @@
-package br.com.pix.errors.handler;
+package br.com.pix.errors.exceptions;
 
 class ClienteInexistenteException(message: String?) : RuntimeException(message)

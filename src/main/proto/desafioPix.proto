@@ -24,7 +24,7 @@ enum TipoChave {
 
 enum TipoConta {
   INVALID_ACCOUNT_TYPE = 0;
-  CONTA_POUPANC3 = 1;
+  CONTA_POUPANCA = 1;
   CONTA_CORRENTE = 2;
 }
 

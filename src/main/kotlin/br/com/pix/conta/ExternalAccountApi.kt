@@ -14,7 +14,7 @@ import java.util.*
 interface ExternalAccountApi {
 
     @Get("/private/contas/todas")
-    fun listarContas() : ContaDTOResponse
+    fun listarContas() : List<ContaDTOResponse>
 
     @Get("/clientes/{clientId}/contas{?tipo}")
     fun consultaContasIdCliente(@PathVariable("clientId") id : String,@QueryValue("tipo") tipoConta : String ) : ContaDTOResponse

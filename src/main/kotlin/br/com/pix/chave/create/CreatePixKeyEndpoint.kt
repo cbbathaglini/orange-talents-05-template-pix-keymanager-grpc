@@ -2,20 +2,15 @@ package br.com.pix.chave.create
 
 import br.com.pix.*
 import br.com.pix.chave.ChavePix
-import br.com.pix.chave.ChavePixRepository
 import br.com.pix.chave.converter
 import br.com.pix.chave.services.RegistraChavePixService
-import br.com.pix.cliente.ClienteDTOResponse
-import br.com.pix.conta.ContaDTOResponse
-import br.com.pix.conta.ExternalAccountApi
-import br.com.pix.errors.handler.JaExisteChaveException
-import io.grpc.Status
+import br.com.pix.errors.handlers.ErrorHandler
 import io.grpc.stub.StreamObserver
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
+@ErrorHandler
 @Singleton
 class CreatePixKeyEndpoint(@Inject private val registraService: RegistraChavePixService) :  ChavePIXServiceGrpc.ChavePIXServiceImplBase(){
 
@@ -38,26 +33,3 @@ class CreatePixKeyEndpoint(@Inject private val registraService: RegistraChavePix
 }
 
 
-
-//@ErrorHandler // 1
-//@Singleton
-//class RegistraChaveEndpoint(@Inject private val service: NovaChavePixService,) // 1
-//    : KeymanagerRegistraGrpcServiceGrpc.KeymanagerRegistraGrpcServiceImplBase() { // 1
-//
-//    // 8
-//    override fun registra(
-//        request: RegistraChavePixRequest, // 1
-//        responseObserver: StreamObserver<RegistraChavePixResponse> // 1
-//    ) {
-//
-//        val novaChave = request.toModel() // 2
-//        val chaveCriada = service.registra(novaChave) // 1
-//
-//        responseObserver.onNext(RegistraChavePixResponse.newBuilder() // 1
-//            .setClienteId(chaveCriada.clienteId.toString())
-//            .setPixId(chaveCriada.id.toString())
-//            .build())
-//        responseObserver.onCompleted()
-//    }
-//
-//}

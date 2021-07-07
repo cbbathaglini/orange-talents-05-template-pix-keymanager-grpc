@@ -1,8 +1,12 @@
-package br.com.pix.errors.handler
+package br.com.pix.errors.handlers
 
+import br.com.pix.errors.exceptions.NaoExisteTipoContaClienteException
+import br.com.pix.errors.handlers.ExceptionHandler
 import io.grpc.Status
+import javax.inject.Singleton
 
-class NaoExisteTipoContaClienteHandler  : ExceptionHandler<NaoExisteTipoContaClienteException>{
+@Singleton
+class NaoExisteTipoContaClienteHandler  : ExceptionHandler<NaoExisteTipoContaClienteException> {
     override fun handle(e: NaoExisteTipoContaClienteException): ExceptionHandler.StatusWithDetails {
         return ExceptionHandler.StatusWithDetails(
             Status.NOT_FOUND

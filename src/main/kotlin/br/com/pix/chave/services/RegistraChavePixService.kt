@@ -3,15 +3,13 @@ package br.com.pix.chave.services
 import br.com.pix.TipoChave
 import br.com.pix.chave.ChavePix
 import br.com.pix.chave.ChavePixRepository
-import br.com.pix.chave.converter
 import br.com.pix.chave.create.ChavePixValidations
 import br.com.pix.cliente.ClienteDTOResponse
 import br.com.pix.conta.ContaDTOResponse
 import br.com.pix.conta.ExternalAccountApi
-import br.com.pix.errors.handler.JaExisteChaveException
-import br.com.pix.errors.handler.NaoExisteTipoContaClienteException
-import io.grpc.Status
-import io.micronaut.http.HttpStatus
+import br.com.pix.errors.exceptions.ClienteInexistenteException
+import br.com.pix.errors.exceptions.JaExisteChaveException
+import br.com.pix.errors.exceptions.NaoExisteTipoContaClienteException
 import io.micronaut.validation.Validated
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +28,7 @@ class RegistraChavePixService(@Inject val itauService : ExternalAccountApi,
         //verifica se o cliente existe
         val clienteDTOResponse : ClienteDTOResponse = itauService.consultaCliente(chavePixValidations.idCliente!!)
         if(clienteDTOResponse == null){
-            throw JaExisteChaveException("O cliente '${chavePixValidations.idCliente}' não existe")
+            throw ClienteInexistenteException("O cliente não existe")
         }
 
         //conta do cliente
@@ -55,7 +53,7 @@ class RegistraChavePixService(@Inject val itauService : ExternalAccountApi,
         //verifica se já existe a chave
         if (!chavePix.tipoChave.equals(TipoChave.RANDOM)) { // apenas chaves não aleatórias são verificadas a duplicidade
             if (chavePixRepository.findByValorChave(chavePix.valorChave).isPresent) {
-                throw JaExisteChaveException("A chave PIX cujo valor é '${chavePix.valorChave}' , já existe")
+                throw JaExisteChaveException("A chave PIX cujo valor é '${chavePix.valorChave}', já existe")
             }
         }
 

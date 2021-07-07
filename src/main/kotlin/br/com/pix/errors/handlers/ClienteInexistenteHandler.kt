@@ -1,8 +1,11 @@
-package br.com.pix.errors.handler
+package br.com.pix.errors.handlers
 
+import br.com.pix.errors.exceptions.ClienteInexistenteException
 import io.grpc.Status
+import javax.inject.Singleton
 
-class ClienteInexistenteHandler : ExceptionHandler<ClienteInexistenteException>{
+@Singleton
+class ClienteInexistenteHandler : ExceptionHandler<ClienteInexistenteException> {
     override fun handle(e: ClienteInexistenteException): ExceptionHandler.StatusWithDetails {
         return ExceptionHandler.StatusWithDetails(
             Status.NOT_FOUND

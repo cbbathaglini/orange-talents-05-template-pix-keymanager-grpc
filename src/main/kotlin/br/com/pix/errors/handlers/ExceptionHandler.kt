@@ -1,4 +1,4 @@
-package br.com.pix.errors.handler
+package br.com.pix.errors.handlers
 
 import io.grpc.Metadata
 import io.grpc.Status

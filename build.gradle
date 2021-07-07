@@ -34,6 +34,7 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     annotationProcessor("io.micronaut:micronaut-validation")
     implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
+    implementation("org.hibernate:hibernate-validator:6.1.6.Final")
     implementation("io.micronaut.xml:micronaut-jackson-xml")
 
     //JPA
