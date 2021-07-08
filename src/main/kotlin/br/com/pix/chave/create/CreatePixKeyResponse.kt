@@ -1,21 +1,23 @@
 package br.com.pix.chave.create
 
+import br.com.pix.conta.BankAccount
 import br.com.pix.conta.ContaDTOResponse
 import br.com.pix.key.TipoChave
+import br.com.pix.titular.Owner
 import br.com.pix.titular.TitularPixDTOResponse
 import java.time.LocalDateTime
 
 class CreatePixKeyResponse(
     val keyType: TipoChave, //<keyType>CPF</keyType>
     val key : String, //<key>string</key>
-    val bankAccount : ContaDTOResponse, /*
+    val bankAccount : BankAccount, /*
                                                 <bankAccount>
                                                     <participant>string</participant>
                                                     <branch>string</branch>
                                                     <accountNumber>string</accountNumber>
                                                     <accountType>CACC</accountType>
                                                 </bankAccount>*/
-    val owner : TitularPixDTOResponse, /*
+    val owner : Owner, /*
                                         <owner>
                                             <type>NATURAL_PERSON</type>
                                             <name>string</name>

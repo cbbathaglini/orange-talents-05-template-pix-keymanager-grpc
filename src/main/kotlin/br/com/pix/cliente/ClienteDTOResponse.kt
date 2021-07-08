@@ -9,4 +9,6 @@ data class ClienteDTOResponse(
     val cpf : String,
     val instituicao : InstituicaoDTOResponse
 ) {
+
+
 }

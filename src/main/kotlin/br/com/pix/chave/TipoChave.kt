@@ -18,16 +18,12 @@ enum class TipoChave {
         }
     },
     PHONE {
-        override fun valida(chave: String): Boolean = chave.matches("^\\+[1-9][0-9]\\d{1,14}\$".toRegex())
+        override fun valida(chave: String): Boolean = chave.matches("^[0-9]{11}\$".toRegex())
 
     },
     EMAIL {
-        override fun valida(chave: String): Boolean {
-            return EmailValidator().run {
-                initialize(null)
-                isValid(chave, null)
-            }
-        }
+        override fun valida(chave: String): Boolean = chave.matches("^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\$".toRegex())
+
     },
     RANDOM {
         override fun valida(chave: String) = true

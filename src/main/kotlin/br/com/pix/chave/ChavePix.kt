@@ -1,5 +1,6 @@
 package br.com.pix.chave
 
+import br.com.pix.chave.create.CreatePixKeyResponse
 import br.com.pix.conta.Conta
 import br.com.pix.conta.TipoConta
 import br.com.pix.key.TipoChave
@@ -31,7 +32,7 @@ class ChavePix(
     @field:NotBlank
     @field:Column(unique = true, length = 77)
     @field:Size(max = 77)
-    val valorChave : String,
+    var valorChave : String,
 
     @field:Valid
     @Embedded
@@ -46,6 +47,13 @@ class ChavePix(
     //val id : Long? = null
 
     @CreationTimestamp
-    val criadaEm : LocalDateTime = LocalDateTime.now()
+    var criadaEm : LocalDateTime = LocalDateTime.now()
 
+
+    fun atualiza(createPixKeyResponse:CreatePixKeyResponse){
+        this.criadaEm = createPixKeyResponse.createdAt
+        if(createPixKeyResponse.keyType == TipoChave.RANDOM){
+            this.valorChave = createPixKeyResponse.key
+        }
+    }
 }

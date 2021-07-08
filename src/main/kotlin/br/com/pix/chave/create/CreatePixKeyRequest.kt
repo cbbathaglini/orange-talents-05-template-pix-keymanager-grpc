@@ -1,14 +1,14 @@
 package br.com.pix.chave.create
 
-import br.com.pix.conta.BankAccountRequest
+import br.com.pix.conta.BankAccount
 import br.com.pix.key.TipoChave
-import br.com.pix.titular.TitularPixDTORequest
+import br.com.pix.titular.Owner
 
 class CreatePixKeyRequest(
     val keyType : TipoChave,
     val key : String,
-    val bankAccount : BankAccountRequest,
-    val owner : TitularPixDTORequest
+    val bankAccount : BankAccount,
+    val owner : Owner
 )
 {
 }

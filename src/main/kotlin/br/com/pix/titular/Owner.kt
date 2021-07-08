@@ -7,7 +7,7 @@ package br.com.pix.titular
 		<taxIdNumber>string</taxIdNumber>
 	</owner>
 * */
-class TitularPixDTORequest(
+class Owner(
     val type : TipoTitular,
     val name : String,
     val taxIdNumber : String
