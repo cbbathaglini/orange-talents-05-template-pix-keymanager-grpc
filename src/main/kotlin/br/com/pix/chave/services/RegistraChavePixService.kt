@@ -65,11 +65,13 @@ class RegistraChavePixService(@Inject val itauService : ExternalAccountApi,
 
             chavePixRepository.save(chavePix)
             return chavePix
+
         }catch (e : HttpClientResponseException){
-            if(e.status == HttpStatus.UNPROCESSABLE_ENTITY){
-                throw JaExisteChaveException("A chave PIX já existe no bcb")
+            if(e.status == HttpStatus.UNPROCESSABLE_ENTITY){ //status code 422
+                throw JaExisteChaveException("Chave pix já registrada")
             }
         }
+
         throw JaExisteChaveException("A chave PIX já existe no bcb")
     }
 }

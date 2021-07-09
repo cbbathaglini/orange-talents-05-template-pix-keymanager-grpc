@@ -1,7 +1,4 @@
 package br.com.pix.conta
-import br.com.pix.instituicao.Instituicao
-import br.com.pix.titular.Titular
-import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull

@@ -4,13 +4,15 @@ import br.com.pix.conta.BankAccount
 import br.com.pix.key.TipoChave
 import br.com.pix.titular.Owner
 
-class CreatePixKeyRequest(
+data class CreatePixKeyRequest(
     val keyType : TipoChave,
     val key : String,
     val bankAccount : BankAccount,
     val owner : Owner
 )
 {
+
+
 }
 
 /*

@@ -2,10 +2,16 @@ package br.com.pix.chave.remove
 
 import br.com.pix.*
 import br.com.pix.chave.ChavePixRepository
+import br.com.pix.chave.ExternalPixApi
+import br.com.pix.chave.create.CreatePixKeyRequest
+import br.com.pix.chave.create.CreatePixKeyResponse
 import br.com.pix.cliente.ClienteDTOResponse
+import br.com.pix.conta.BankAccount
 import br.com.pix.conta.ContaDTOResponse
 import br.com.pix.conta.ExternalAccountApi
 import br.com.pix.instituicao.InstituicaoDTOResponse
+import br.com.pix.titular.Owner
+import br.com.pix.titular.TipoTitular
 import br.com.pix.titular.TitularDTOResponse
 import io.grpc.ManagedChannel
 import io.grpc.Status
@@ -24,6 +30,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import org.junit.jupiter.api.assertThrows;
 import org.mockito.Mockito
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -41,6 +49,9 @@ internal class RemovePixKeyEndpointTest(
 
     @Inject
     lateinit var itauService: ExternalAccountApi
+
+    @Inject
+    lateinit var bcbService: ExternalPixApi
 
     @BeforeEach
     internal fun setup() {
@@ -66,6 +77,10 @@ internal class RemovePixKeyEndpointTest(
         return Mockito.mock(ExternalAccountApi::class.java)
     }
 
+    @MockBean(ExternalPixApi::class)
+    fun bcbServiceMockado(): ExternalPixApi? {
+        return Mockito.mock(ExternalPixApi::class.java)
+    }
 
 
     @Test
@@ -103,6 +118,12 @@ internal class RemovePixKeyEndpointTest(
     @Test
     fun `aquele que remove corretamente`(){
         val register = registraCliente()
+
+        //validação
+        with(register){
+            assertNotNull(pixId)
+            assertNotNull(chave)
+        }
 
         var list = chavePixRepository.findAll()
         //validação
@@ -156,11 +177,9 @@ internal class RemovePixKeyEndpointTest(
     }
 
     private fun registraCliente(): RegistraChavePixResponse {
-        Mockito.`when`(itauService.consultaCliente("de95a228-1f27-4ad2-907e-e5a2d816e9bc"))
-            .thenReturn(ClienteCassio())
 
-        Mockito.`when`(itauService.consultaContasIdCliente("de95a228-1f27-4ad2-907e-e5a2d816e9bc",TipoConta.CONTA_CORRENTE.toString()))
-            .thenReturn(ContaCassio())
+
+        mockCassio("31643468081", br.com.pix.key.TipoChave.CPF,TipoConta.CONTA_CORRENTE)
 
         return  grpcClientRegister.salvarChave(RegistraChavePixRequest.newBuilder()
             .setChave("31643468081")
@@ -168,5 +187,61 @@ internal class RemovePixKeyEndpointTest(
             .setTipoDeChave(TipoChave.CPF)
             .setTipoDeConta(TipoConta.CONTA_CORRENTE)
             .build())
+    }
+
+
+
+    private fun mockCassio(chave : String,  tipoChave : br.com.pix.key.TipoChave, tipoConta: TipoConta) {
+
+        var conta : ContaDTOResponse? = ContaCassio()
+
+        if(tipoConta == TipoConta.INVALID_ACCOUNT_TYPE || tipoChave == br.com.pix.key.TipoChave.INVALID_KEY_TYPE){
+            conta =  null
+        }
+
+        Mockito.`when`(itauService.consultaCliente("de95a228-1f27-4ad2-907e-e5a2d816e9bc"))
+            .thenReturn(ClienteCassio())
+
+
+        Mockito.`when`(itauService.consultaContasIdCliente("de95a228-1f27-4ad2-907e-e5a2d816e9bc",tipoConta.toString()))
+            .thenReturn(conta)
+
+
+        val contaCassio = ContaCassio()
+        val bankAccount : BankAccount = BankAccount(participant = "60701190",
+            branch = contaCassio.agencia,
+            accountNumber = contaCassio.numero,
+            accountType = "CACC"
+        )
+
+        val owner : Owner =  Owner(
+            type = TipoTitular.NATURAL_PERSON,
+            name = contaCassio.titular.nome,
+            taxIdNumber =contaCassio.titular.cpf
+        )
+
+        val createPixKeyRequest : CreatePixKeyRequest = CreatePixKeyRequest(
+            keyType = tipoChave,
+            key = chave,
+            bankAccount = bankAccount,
+            owner =owner
+        )
+
+
+        val str = "2021-07-08 14:35"
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val dateTime = LocalDateTime.parse(str, formatter)
+
+        val createPixKeyResponse : CreatePixKeyResponse = CreatePixKeyResponse(
+            keyType = tipoChave,
+            key = chave,
+            bankAccount = bankAccount,
+            owner = owner,
+            createdAt = dateTime
+        )
+
+        println("CreatePixKeyRequest: ${createPixKeyRequest}")
+        Mockito.doReturn(createPixKeyResponse).`when`(bcbService).criarChavePix(createPixKeyRequest)
+
     }
 }

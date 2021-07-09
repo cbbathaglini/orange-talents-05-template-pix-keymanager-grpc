@@ -7,7 +7,7 @@ import br.com.pix.titular.Owner
 import br.com.pix.titular.TitularPixDTOResponse
 import java.time.LocalDateTime
 
-class CreatePixKeyResponse(
+data class CreatePixKeyResponse(
     val keyType: TipoChave, //<keyType>CPF</keyType>
     val key : String, //<key>string</key>
     val bankAccount : BankAccount, /*
