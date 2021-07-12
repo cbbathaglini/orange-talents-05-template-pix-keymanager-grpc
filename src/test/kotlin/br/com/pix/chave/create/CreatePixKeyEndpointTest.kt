@@ -300,7 +300,6 @@ internal class CreatePixKeyEndpointTest(val grpcClient : ChavePIXServiceGrpc.Cha
             instituicao = InstituicaoDTOResponse(nome = "ITAÚ UNIBANCO S.A.",ispb = "60701190")
         )
     }
-
     private fun ContaCassio() :  ContaDTOResponse{
         return ContaDTOResponse(
             tipo = TipoConta.CONTA_CORRENTE.toString(),
@@ -313,8 +312,6 @@ internal class CreatePixKeyEndpointTest(val grpcClient : ChavePIXServiceGrpc.Cha
             )
         )
     }
-
-
     private fun mockCassio(chave : String,  tipoChave : br.com.pix.key.TipoChave, tipoConta: TipoConta) {
 
         var conta : ContaDTOResponse? = ContaCassio()
@@ -366,13 +363,7 @@ internal class CreatePixKeyEndpointTest(val grpcClient : ChavePIXServiceGrpc.Cha
 
         println("CreatePixKeyRequest: ${createPixKeyRequest}")
         Mockito.doReturn(createPixKeyResponse).`when`(bcbService).criarChavePix(createPixKeyRequest)
-//        try {
-//
-////            val testeaux = Mockito.`when`( bcbService.criarChavePix(createPixKeyRequest))
-////                .thenReturn(createPixKeyResponse)
-//        }catch (e : Exception){
-//            println(e)
-//        }
+
     }
 
 
