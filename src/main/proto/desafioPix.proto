@@ -6,12 +6,17 @@ option java_outer_classname = "DesafioPix";
 option objc_class_prefix = "HLW";
 
 package br.com.pix;
+import "google/protobuf/timestamp.proto";
 
 service ChavePIXService {
   rpc salvarChave (RegistraChavePixRequest) returns (RegistraChavePixResponse) {}
 }
 service RemocaoChavePixService{
   rpc remover (RemoverChavePixRequest) returns (RemoverChavePixResponse) {}
+}
+
+service ConsultaChavePixService{
+  rpc consultar (ConsultarChavePixRequest) returns (ConsultarChavePixResponse) {}
 }
 
 enum TipoChave {
@@ -52,3 +57,38 @@ message RemoverChavePixResponse{
   string pixId = 1;
   string idcliente = 2;
 }
+
+
+message ConsultarChavePixRequest{
+    string idcliente = 1;
+    string pixId     = 2;
+    string chave     = 3;
+}
+
+message ConsultarChavePixResponse{
+
+    string nomeTitular = 1;
+    string cpfTitular = 2;
+    string nomeInstituicao = 3;
+    string agencia = 4;
+    string numero = 5;
+    TipoConta tipoConta = 6;
+    TipoChave tipoChave = 7;
+    string chave = 8;
+    google.protobuf.Timestamp criadaEm = 9;
+    string idcliente = 10;
+    string pixId = 11;
+
+}
+
+
+/*
+ix ID (opcional - necessário somente para abordagem 1);
+Identificador do cliente (opcional - necessário somente para abordagem 1);
+Tipo da chave;
+Valor da chave;
+Nome e CPF do titular da conta;
+Dados da conta vinculada a chave Pix:
+nome da instituição financeira;
+agência, número da conta e tipo da conta (Corrente ou Poupança);
+Data/hora de registro ou criação da chave;*/

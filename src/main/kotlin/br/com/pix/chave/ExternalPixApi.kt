@@ -4,6 +4,7 @@ import br.com.pix.chave.create.CreatePixKeyRequest
 import br.com.pix.chave.create.CreatePixKeyResponse
 import br.com.pix.chave.remove.DeletePixKeyRequest
 import br.com.pix.chave.remove.DeletePixKeyResponse
+import br.com.pix.chave.search.PixKeyDetailsResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.http.client.annotation.Client
@@ -22,11 +23,12 @@ interface ExternalPixApi {
 //    fun listarChavesPix() : PixKeysListResponse
 //
 
-//    @Post
-//    @Consumes(MediaType.APPLICATION_XML)
-//    fun buscarChavePix(@Body @Valid createPixKeyRequest: CreatePixKeyRequest) : CreatePixKeyResponse
-//
-//
+    @Get("{key}")
+    @Produces(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_XML)
+    fun buscarChavePix(@PathVariable("key") chave : String) : PixKeyDetailsResponse
+
+
     @Delete("{key}")
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_XML)

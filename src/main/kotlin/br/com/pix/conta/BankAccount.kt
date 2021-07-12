@@ -15,4 +15,5 @@ data class BankAccount(
     val accountType : String //Tipo de conta (CACC=Conta Corrente; SVGS=Conta Poupança)
 ) {
 
+
 }

@@ -27,4 +27,13 @@ data class Conta (
     val ispbInstituicao: String
 ){
 
+    fun converterBank() : BankAccount{
+        return BankAccount(
+            participant = "60701190",
+            branch = this.agencia,
+            accountNumber = this.numero,
+            accountType = this.tipo.toString()
+        )
+    }
+
 }

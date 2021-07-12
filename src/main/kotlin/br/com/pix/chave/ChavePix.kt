@@ -1,9 +1,14 @@
 package br.com.pix.chave
 
+import br.com.pix.ConsultarChavePixResponse
 import br.com.pix.chave.create.CreatePixKeyResponse
+import br.com.pix.chave.search.PixKeyDetailsResponse
+import br.com.pix.conta.BankAccount
 import br.com.pix.conta.Conta
 import br.com.pix.conta.TipoConta
 import br.com.pix.key.TipoChave
+import br.com.pix.titular.Owner
+import br.com.pix.titular.TipoTitular
 import com.sun.istack.NotNull
 import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
@@ -55,5 +60,19 @@ class ChavePix(
         if(createPixKeyResponse.keyType == TipoChave.RANDOM){
             this.valorChave = createPixKeyResponse.key
         }
+    }
+
+    fun converterConsulta() : PixKeyDetailsResponse{
+        return PixKeyDetailsResponse(
+            pixId = this.id!!,
+            clientId = this.idCliente,
+            keyType = this.tipoChave,
+            key = this.valorChave,
+            bankAccount = conta.converterBank(),
+            owner =  Owner(type = TipoTitular.NATURAL_PERSON,
+                    name = this.conta.nomeTitular,
+                    taxIdNumber = this.conta.cpfTitular ),
+            createdAt = this.criadaEm
+        )
     }
 }
