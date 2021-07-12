@@ -19,6 +19,10 @@ service ConsultaChavePixService{
   rpc consultar (ConsultarChavePixRequest) returns (ConsultarChavePixResponse) {}
 }
 
+service ListaChavePixService{
+  rpc listar (ListarChavesPixRequest) returns (ListarChavesPixResponse) {}
+}
+
 enum TipoChave {
   INVALID_KEY_TYPE  = 0;
   CPF = 1;
@@ -79,6 +83,25 @@ message ConsultarChavePixResponse{
     string idcliente = 10;
     string pixId = 11;
 
+}
+
+
+message ListarChavesPixRequest {
+  string clienteId = 1;
+}
+
+message ListarChavesPixResponse {
+
+  string idCliente = 1;
+  repeated PixKey chave = 2;
+
+  message PixKey{
+    string idPix = 1;
+    TipoChave tipoChave = 2;
+    string chave = 3;
+    TipoConta tipoConta = 4;
+    google.protobuf.Timestamp registradoEm = 5;
+  }
 }
 
 

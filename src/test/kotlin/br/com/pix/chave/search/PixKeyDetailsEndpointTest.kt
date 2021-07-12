@@ -155,9 +155,6 @@ internal class PixKeyDetailsEndpointTest(val grpcClient : ConsultaChavePixServic
     }
 
 
-
-
-
     private fun cadastroCassio():ChavePix {
 
         val chavePix :ChavePix = ChavePix(
@@ -169,7 +166,6 @@ internal class PixKeyDetailsEndpointTest(val grpcClient : ConsultaChavePixServic
         )
         chavePixRepository.save(chavePix)
         return chavePix
-
 
     }
 

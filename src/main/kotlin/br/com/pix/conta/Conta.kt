@@ -1,4 +1,6 @@
 package br.com.pix.conta
+import br.com.pix.titular.Owner
+import br.com.pix.titular.TipoTitular
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
@@ -33,6 +35,14 @@ data class Conta (
             branch = this.agencia,
             accountNumber = this.numero,
             accountType = this.tipo.toString()
+        )
+    }
+
+    fun converterOwner() : Owner{
+        return Owner(
+           type = TipoTitular.NATURAL_PERSON,
+            name = this.nomeTitular,
+            taxIdNumber = this.cpfTitular
         )
     }
 
