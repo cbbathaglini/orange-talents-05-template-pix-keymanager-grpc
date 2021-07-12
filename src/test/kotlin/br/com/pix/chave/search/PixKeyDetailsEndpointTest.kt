@@ -149,7 +149,7 @@ internal class PixKeyDetailsEndpointTest(val grpcClient : ConsultaChavePixServic
         //validação
         with(response) {
             assertEquals(Status.INVALID_ARGUMENT.code, status.code)
-            assertEquals("Invalid UUID string: ", status.description)
+            assertEquals("Erro getAbordagem()", status.description)
         }
 
     }

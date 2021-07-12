@@ -26,7 +26,7 @@ class PixKeysListEndpoint (@Inject val chavePixRepository: ChavePixRepository
 ) :  ListaChavePixServiceGrpc.ListaChavePixServiceImplBase(){
     override fun listar(request: ListarChavesPixRequest, responseObserver: StreamObserver<ListarChavesPixResponse>) {
         if (request.clienteId.isNullOrBlank())
-            throw IllegalArgumentException("Cliente ID não pode ser nulo ou vazio")
+            throw IllegalArgumentException("O identificador do cliente não pode ser nulo ou vazio")
 
         val lista : List<ChavePix> = chavePixRepository.findByIdCliente(UUID.fromString(request.clienteId))
 

@@ -13,10 +13,10 @@ import java.util.*
 import javax.validation.ConstraintViolationException
 
 fun ConsultarChavePixRequest.getAbordagem() : Int {
-    if(this.chave != null && this.chave != ""){
+    if(!this.chave.isNullOrBlank()){
         return 2
     }
-    if(this.idcliente != null && this.pixId != null){
+    if(!this.idcliente.isNullOrBlank() && !this.pixId.isNullOrBlank()){
         return 1
     }
     throw Exception("Erro getAbordagem()")
