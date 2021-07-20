@@ -18,6 +18,7 @@ class CreatePixKeyEndpoint(@Inject private val registraService: RegistraChavePix
     override fun salvarChave(request: RegistraChavePixRequest, responseObserver: StreamObserver<RegistraChavePixResponse>?) {
 
 
+
         val chavePixValidations : ChavePixValidations = request.converter()
         val chavePix : ChavePix = registraService.registrar(chavePixValidations)
 

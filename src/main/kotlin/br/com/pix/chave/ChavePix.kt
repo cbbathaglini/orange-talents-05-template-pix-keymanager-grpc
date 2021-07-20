@@ -75,4 +75,10 @@ class ChavePix(
             createdAt = this.criadaEm
         )
     }
+
+    override fun toString(): String {
+        return "ChavePix(id=$id,idCliente=$idCliente, tipoChave=$tipoChave, tipoConta=$tipoConta, valorChave='$valorChave', conta=$conta,  criadaEm=$criadaEm)"
+    }
+
+
 }

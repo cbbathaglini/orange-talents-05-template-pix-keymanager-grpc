@@ -32,6 +32,9 @@ class RegistraChavePixService(@Inject val itauService : ExternalAccountApi,
     @Transactional
     fun registrar(@Valid chavePixValidations: ChavePixValidations): ChavePix {
 
+        val list = chavePixRepository.findAll()
+        println("Lista > ${list}")
+
         //validar clientId
         //verifica se o cliente existe
         val clienteDTOResponse : ClienteDTOResponse? = itauService.consultaCliente(chavePixValidations.idCliente!!)
