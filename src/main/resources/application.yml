@@ -4,13 +4,28 @@ micronaut:
   server:
     port: 8087
 
+
+grpc:
+  server:
+    port: ${SERVER_PORT:50051}
+    keep-alive-time: 1h
+    max-inbound-message-size: 1024
+
+#datasources:
+#  default:
+#    url: jdbc:mariadb://127.0.0.1:3306/pix
+#    driverClassName: org.mariadb.jdbc.Driver
+#    username: root
+#    password: ""
+
 datasources:
   default:
-    url: jdbc:mariadb://127.0.0.1:3306/pix
-    driverClassName: org.mariadb.jdbc.Driver
-    username: root
-    password: ""
-
+    url: ${DB_URI:jdbc:postgresql://localhost:5432/pix}
+    driverClassName: org.postgresql.Driver
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:admin}
+    schema-generate: CREATE_DROP
+    dialect: ${DB_DIALECT:POSTGRES}
 
 #datasources:
 #  default:
@@ -25,3 +40,10 @@ jpa:
       hibernate:
         hbm2ddl:
           auto: update
+
+
+itauservice:
+    url: ${ITAU_URL:`http://localhost:9091`}
+
+bcbservice:
+    url: ${BANCO_CENTRAL_URL:`http://localhost:8082`}
